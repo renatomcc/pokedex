@@ -1,0 +1,38 @@
+.Poke-Cards{
+    padding: 10px;
+    gap: 30px;
+}
+.PokeCard {
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+.pokeNumber {
+    font-family: cursive
+}
+
+.pokeImage img {
+    width: 200px;
+    height: 200px;
+}
+
+.pokeImage:hover {
+    transform: scale(1.4);
+    transition: 0.3s;
+}
+
+
+.pokeName {
+    padding-bottom: 20px;
+}
+
+.pokeTypes {
+    display: flex;
+    justify-content: space-around;
+}
+
+.pokeTypes img {
+    width: 35px;
+    height: 35px;
+}
