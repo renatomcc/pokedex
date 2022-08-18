@@ -8,22 +8,20 @@ import { setOptionColor } from './utils/setBGColor'
 
 function App() {
   const [pokeURL, setPokeURL] = useState<PokeData[]>([]);
-  let [pokemons, setPokemon] = useState<Pokemon[]>([]);
-  const [pokeSorted, setPokeSorted] = useState<Pokemon[]>(pokemons);
+  const [pokemons, setPokemon] = useState<Pokemon[]>([]);
+  const [pokeSorted, setPokeSorted] = useState<Pokemon[]>([]);
   const [isLoading, setIsLoading] = useState(true)
-  const [isSorted, setIsSorted] = useState(false);
+  const [searchPoke, setSearchPoke] = useState('');
+  const filteredPokemons = searchPoke.length > 0 ? pokeSorted.filter(poke => poke.name.includes(searchPoke)) : pokeSorted;
 
   useEffect(() => {
-    console.log('url catched')
-    axios.get('https://pokeapi.co/api/v2/pokemon/?limit=151&offset=0')
+    axios.get('https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0')
       .then(response => {
         setPokeURL(response.data.results)
       });
   }, []);
 
-
   useEffect(() => {
-    console.log('data catched')
     pokeURL.map(data => {
       axios.get(data.url)
         .then(response => {
@@ -40,7 +38,6 @@ function App() {
     setIsLoading(false);
   }, []);
 
-
   pokemons.sort(function (a, b) {
     return a.id - b.id;
   });
@@ -51,25 +48,19 @@ function App() {
       return;
     }
     pokemons.map(() => {
-      setPokeSorted(pokeSorted.filter(element => element.types[0].type.name == type || (element.types[1] != null && element.types[1].type.name == type)));
+      setPokeSorted(pokemons.filter(element => element.types[0].type.name == type || (element.types[1] != null && element.types[1].type.name == type)));
     })
   }
 
   const sortByIDorName = (option: string) => {
     if (option == 'id') {
-      pokeSorted.sort(function (a, b) {
-        return a.id - b.id;
-      });
+      setPokeSorted([...pokeSorted].sort((a, b) => a.id - b.id));
     }
     if (option == 'name') {
-
+      setPokeSorted([...pokeSorted].sort((a, b) =>
+        a.name > b.name ? 1 : -1,
+      ));
     }
-  }
-
-  const searchPokemon = (option: string) => {
-    pokemons.map(poke => {
-      setPokeSorted(pokeSorted.filter(element => element.name.toLowerCase().includes(option.toLowerCase())));
-    })
   }
 
   return (
@@ -113,17 +104,17 @@ function App() {
                 type="text"
                 id="inputText"
                 placeholder='Pokemon name...'
-                onChange={(e) => searchPokemon(e.target.value)}
+                onChange={(e) => setSearchPoke(e.target.value)}
+                value={searchPoke}
               />
             </div>
           </div>
         </div>
-
       </div>
       {!isLoading && (
         <div className="PokeContainer">
           <div className="Poke-Cards">
-            {pokeSorted.map(poke => (
+            {filteredPokemons.map(poke => (
               <Pokecard
                 id={poke.id}
                 name={poke.name}
@@ -131,7 +122,8 @@ function App() {
                 types={poke.types}
                 shinySprite={poke.shinySprite}
               />
-            ))}
+            ))
+            }
           </div>
         </div>
       )}
