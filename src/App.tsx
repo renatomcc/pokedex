@@ -1,79 +1,157 @@
 import { useEffect, useState } from 'react'
 import './styles/App.css'
-import { Pokecard } from './components/Pokecards'
+import Pokecard from './components/Pokecards'
 import axios from 'axios'
 import './styles/global.css'
 import { Header } from './components/Header'
 import { setOptionColor } from './utils/setBGColor'
+import { favorites, shinies } from './components/Pokecards'
 
 function App() {
-  const [pokeURL, setPokeURL] = useState<PokeData[]>([]);
-  const [pokemons, setPokemon] = useState<Pokemon[]>([]);
+  const [pokedex, setPokedex] = useState<Pokemon[]>([])
   const [pokeSorted, setPokeSorted] = useState<Pokemon[]>([]);
   const [isLoading, setIsLoading] = useState(true)
   const [searchPoke, setSearchPoke] = useState('');
-  const filteredPokemons = searchPoke.length > 0 ? pokeSorted.filter(poke => poke.name.includes(searchPoke)) : pokeSorted;
+  const [numOfPokes, setNumOfPokes] = useState(50);
+  const [currentSort, setCurrentSort] = useState('id')
+  const [currentType, setCurrentType] = useState('all')
 
-  useEffect(() => {
-    axios.get('https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0')
-      .then(response => {
-        setPokeURL(response.data.results)
-      });
-  }, []);
+  const slicedDex: Pokemon[] = pokeSorted.slice(0, numOfPokes);
+  var filteredPokemons = searchPoke.length > 0 ? pokeSorted.filter(poke => poke.name.includes(searchPoke.toLowerCase())).slice(0, numOfPokes) : slicedDex;
 
-  useEffect(() => {
-    pokeURL.map(data => {
-      axios.get(data.url)
-        .then(response => {
-          const Pokemon: Pokemon = {
-            id: response.data.id,
-            sprite: response.data.sprites['front_default'],
-            shinySprite: response.data.sprites['front_shiny'],
-            name: response.data.name.charAt(0).toUpperCase() + response.data.name.slice(1),
-            types: response.data.types,
-          };
-          pokemons.push(Pokemon)
+
+  async function fetchData() {
+    Promise.all(
+      await axios.get('https://pokeapi.co/api/v2/pokemon/?limit=898')
+        .then((data: any) => {
+          return data.data.results
         })
-    })
-    setIsLoading(false);
-  }, []);
-
-  pokemons.sort(function (a, b) {
-    return a.id - b.id;
-  });
-
-  const sortByType = (type: string) => {
-    if (type == 'all') {
-      setPokeSorted(pokemons)
-      return;
-    }
-    pokemons.map(() => {
-      setPokeSorted(pokemons.filter(element => element.types[0].type.name == type || (element.types[1] != null && element.types[1].type.name == type)));
+    ).then((response) => {
+      fetchPokemon(response)
     })
   }
 
-  const sortByIDorName = (option: string) => {
-    if (option == 'id') {
-      setPokeSorted([...pokeSorted].sort((a, b) => a.id - b.id));
+  async function fetchPokemon(data: PokeData[]) {
+    Promise.all(
+      data.map(async (data: any) => {
+        return fetch(data.url).then(response => {
+          return response.json()
+        })
+      })
+    ).then(result => {
+      const pokemons = result.map(poke => {
+        return {
+          id: poke.id,
+          sprite: poke.sprites['front_default'],
+          spriteShiny: poke.sprites['front_shiny'],
+          name: poke.name,
+          types: poke.types,
+          favorite: false,
+        }
+      })
+      setPokedex(pokemons)
+      setPokeSorted(pokemons)
+      setIsLoading(false)
+    })
+  }
+
+  useEffect(() => {
+    fetchData()
+    console.log(filteredPokemons.length)
+  }, [])
+
+
+  const sortBy = (option: string) => {
+    setCurrentSort(option)
+    if (option == 'id' && currentType == 'all') {
+      console.log(`currentSort: ${currentSort} - currentType: ${currentType}`)
+      setPokeSorted(pokedex)
     }
-    if (option == 'name') {
-      setPokeSorted([...pokeSorted].sort((a, b) =>
+    if (option == 'id' && currentType != 'all') {
+      console.log(`currentSort: ${currentSort} - currentType: ${currentType}`)
+      setPokeSorted(pokedex.filter(element => element.types[0].type.name == currentType || (element.types[1] != null && element.types[1].type.name == currentType)))
+    }
+    if (option == 'name' && currentType == 'all') {
+      console.log(`currentSort: ${currentSort} - currentType: ${currentType}`)
+      setPokeSorted([...pokedex].sort((a, b) =>
         a.name > b.name ? 1 : -1,
       ));
     }
+    if (option == 'name' && currentType != 'all') {
+      console.log(`currentSort: ${currentSort} - currentType: ${currentType}`)
+      setPokeSorted([...pokedex].sort((a, b) =>
+        a.name > b.name ? 1 : -1,
+      ).filter(element => element.types[0].type.name == currentType || (element.types[1] != null && element.types[1].type.name == currentType)));
+    }
+    if (option == 'favorites' && currentType == 'all') {
+      console.log(`currentSort: ${currentSort} - currentType: ${currentType}`)
+      var newPokedex: Pokemon[] = [];
+      pokedex.map(item => {
+        if (favorites.includes(item.id)) newPokedex.push(item)
+      })
+      setPokeSorted(newPokedex)
+    }
+    if (option == 'favorites' && currentType != 'all') {
+      var newPokedex: Pokemon[] = [];
+      pokedex.map(item => {
+        if (favorites.includes(item.id)) newPokedex.push(item)
+      })
+      setPokeSorted(newPokedex.filter(element => element.types[0].type.name == currentType || (element.types[1] != null && element.types[1].type.name == currentType)))
+    }
+  }
+
+  const sortByType = (option: string) => {
+    setCurrentType(option);
+    if (currentSort == 'id' && option == 'all') {
+      console.log(`currentSort: ${currentSort} - currentType: ${currentType}`)
+      setPokeSorted(pokedex)
+    }
+    if (currentSort == 'id' && option != 'all') {
+      console.log(`currentSort: ${currentSort} - currentType: ${currentType}`)
+      setPokeSorted(pokedex.filter(element => element.types[0].type.name == option || (element.types[1] != null && element.types[1].type.name == option)))
+    }
+    if (currentSort == 'name' && option == 'all') {
+      console.log(`currentSort: ${currentSort} - currentType: ${currentType}`)
+      setPokeSorted(pokedex.sort((a, b) => a.name > b.name ? 1 : -1))
+    }
+    if (currentSort == 'name' && option != 'all') {
+      console.log(`currentSort: ${currentSort} - currentType: ${currentType}`)
+      setPokeSorted(pokedex.filter(element => element.types[0].type.name == option || (element.types[1] != null && element.types[1].type.name == option)).sort((a, b) => a.name > b.name ? 1 : -1))
+    }
+    if (currentSort == 'favorites' && option == 'all') {
+      console.log(`currentSort: ${currentSort} - currentType: ${currentType}`)
+      var newPokedex: Pokemon[] = [];
+      pokedex.map(item => {
+        if (favorites.includes(item.id)) newPokedex.push(item)
+      })
+      setPokeSorted(newPokedex)
+    }
+    if (currentSort == 'favorites' && option != 'all') {
+      var newPokedex: Pokemon[] = [];
+      pokedex.map(item => {
+        if (favorites.includes(item.id)) newPokedex.push(item)
+      })
+      setPokeSorted(newPokedex.filter(element => element.types[0].type.name == option || (element.types[1] != null && element.types[1].type.name == option)))
+    }
+  }
+
+  const loadMore = () => {
+    setNumOfPokes(numOfPokes + 50)
+    console.log(filteredPokemons)
   }
 
   return (
     <div className="Container">
-      <Header></Header>
-      <div className="filter_bars">
+      <Header />
+      <div className="filter_bars" id='filter_bars'>
         <div className="filterByIdOrName">
           <label>SORT BY:</label>
           <select
-            onChange={(e) => sortByIDorName(e.target.value)}
+            onChange={(e) => sortBy(e.target.value)}
           >
             <option value="id">ID</option>
             <option value="name">NAME</option>
+            <option value="favorites">FAVORITES</option>
           </select>
         </div>
         <div className="filterByType">
@@ -97,7 +175,7 @@ function App() {
           </div>
           <div className="search_bar">
             <div className="searchIcon">
-              <img src="https://cdn.icon-icons.com/icons2/621/PNG/512/magnifier-1_icon-icons.com_56924.png" alt="Search Icon" />
+              <img src="src\images\searchIcon.png" alt="Search Icon" />
             </div>
             <div className="searchInput">
               <input
@@ -112,25 +190,36 @@ function App() {
         </div>
       </div>
       {!isLoading && (
-        <div className="PokeContainer">
-          <div className="Poke-Cards">
-            {filteredPokemons.map(poke => (
-              <Pokecard
-                id={poke.id}
-                name={poke.name}
-                sprite={poke.sprite}
-                types={poke.types}
-                shinySprite={poke.shinySprite}
-              />
-            ))
-            }
+        <>
+          <div className="PokeContainer">
+            <div className="Poke-Cards">
+              {filteredPokemons.map(poke => (
+                <Pokecard
+                  id={poke.id}
+                  name={poke.name}
+                  sprite={shinies.includes(poke.id) ? poke.spriteShiny : poke.sprite}
+                  types={poke.types}
+                  shinySprite={poke.spriteShiny}
+                  favorite={false} />
+              ))
+              }
+            </div>
           </div>
-        </div>
+          {((slicedDex.length < filteredPokemons.length + 1)) && (
+            <div className="load">
+              <button id='loadBtn'
+                onClick={() => { loadMore() }}
+              > Catch more!
+                <img src="src\images\open_Pokeball.png" alt="pokeball" />
+              </button>
+            </div>
+          )}
+        </>
       )}
       {isLoading && (
         <div className='loadingScreen'>
-          <p>Carregando...</p>
-          <img src="https://i.pinimg.com/originals/66/89/dc/6689dc331be27e66349ce9a4d15ddff3.gif" />
+          <p>Catching 'Em All!</p>
+          <img src="src\images\loadingPikachu.gif" />
         </div>
       )}
     </div>
@@ -142,6 +231,7 @@ export default App
 let pokeFilterByType: PokeTypes[] = [
   { "label": 'ALL', "value": "all" },
   { "label": 'BUG', "value": "bug" },
+  { "label": 'DARK', "value": "dark" },
   { "label": 'DRAGON', "value": "dragon" },
   { "label": 'ELECTRIC', "value": "electric" },
   { "label": 'FAIRY', "value": "fairy" },
@@ -163,9 +253,10 @@ let pokeFilterByType: PokeTypes[] = [
 type Pokemon = {
   id: number;
   sprite: string;
-  shinySprite: string;
+  spriteShiny: string;
   name: string;
   types: any[];
+  favorite: boolean;
 }
 
 type PokeData = {

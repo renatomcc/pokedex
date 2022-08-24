@@ -1,7 +1,8 @@
-.Poke-Cards{
+.Poke-Cards {
     padding: 10px;
     gap: 30px;
 }
+
 .PokeCard {
     padding: 10px;
     border-radius: 10px;
@@ -9,7 +10,11 @@
 }
 
 .pokeNumber {
-    font-family: cursive
+    font-family: 'Retro Land Mayhem', sans-serif;
+    text-shadow: 2px 2px 2px rgba(221, 221, 221, 0.4);
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+    padding: 5px;
 }
 
 .pokeImage img {
@@ -18,21 +23,51 @@
 }
 
 .pokeImage:hover {
-    transform: scale(1.4);
+    transform: scale(1.1);
     transition: 0.3s;
 }
 
+.pokeUpperPart {
+    display: flex;
+    justify-content: space-between;
+}
+
+.pokeFav {
+    width: 20px;
+    height: 20px;
+    /* background-image: url('https://www.nicepng.com/png/full/896-8968612_minecraft-heart-minecraft-health-bar-png.png'); */
+    /* background-image: url('https://art.pixilart.com/d0c8ec54cc21b85.png'); */
+    background-size: contain;
+    cursor: pointer;
+}
+
+.pokeShiny {
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    cursor: pointer;
+}
 
 .pokeName {
     padding-bottom: 20px;
+    font-family: 'Retro Land Mayhem', sans-serif;
+    color: rgba(0, 0, 0, 0.9);
+    text-shadow: 2px 2px 2px rgba(221, 221, 221, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .pokeTypes {
+    height: 30px;
     display: flex;
     justify-content: space-around;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .pokeTypes img {
     width: 35px;
     height: 35px;
+    border-radius: 50px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
 }
