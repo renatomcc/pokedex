@@ -60,12 +60,13 @@ function App() {
     console.log(filteredPokemons.length)
   }, [])
 
-
   const sortBy = (option: string) => {
     setCurrentSort(option)
     if (option == 'id' && currentType == 'all') {
       console.log(`currentSort: ${currentSort} - currentType: ${currentType}`)
-      setPokeSorted(pokedex)
+      setPokeSorted(pokedex.sort(function (a, b) {
+        return a.id - b.id;
+      }))
     }
     if (option == 'id' && currentType != 'all') {
       console.log(`currentSort: ${currentSort} - currentType: ${currentType}`)
@@ -175,7 +176,7 @@ function App() {
           </div>
           <div className="search_bar">
             <div className="searchIcon">
-              <img src="src\images\searchIcon.png" alt="Search Icon" />
+              <img src="https://i.ibb.co/rp31w0K/search-Icon.png" alt="Search Icon" />
             </div>
             <div className="searchInput">
               <input
@@ -210,7 +211,7 @@ function App() {
               <button id='loadBtn'
                 onClick={() => { loadMore() }}
               > Catch more!
-                <img src="src\images\open_Pokeball.png" alt="pokeball" />
+                <img src="https://i.ibb.co/6m474Dv/open-Pokeball.png" alt="pokeball" />
               </button>
             </div>
           )}
@@ -219,7 +220,7 @@ function App() {
       {isLoading && (
         <div className='loadingScreen'>
           <p>Catching 'Em All!</p>
-          <img src="src\images\loadingPikachu.gif" />
+          <img src="https://i.ibb.co/LxxrXwP/loading-Pikachu.gif" />
         </div>
       )}
     </div>

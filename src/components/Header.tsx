@@ -9,7 +9,7 @@ export const Header = () => {
                     const fontColor = document.getElementById('filter_bars');
                     if (theme == 'light') {
                         setTheme('dark');
-                        document.body.style.backgroundImage = "url('src/images/darkBackground.jpg')"
+                        document.body.style.backgroundImage = "url('https://i.ibb.co/wQ1j4g6/dark-Background.jpg')"
                         document.body.style.transition = 'background 0.5s'
                         if (fontColor) {
                             fontColor.style.color = 'white';
@@ -17,7 +17,7 @@ export const Header = () => {
                         }
                     } else {
                         setTheme('light');
-                        document.body.style.backgroundImage = "url('src/images/lightBackground.jpg')"
+                        document.body.style.backgroundImage = "url('https://i.ibb.co/KGWFjpm/light-Background.jpg')"
                         document.body.style.transition = 'background 0.5s'
                         if (fontColor) fontColor.style.color = 'black';
                         if (fontColor) {
@@ -28,7 +28,7 @@ export const Header = () => {
                 }} />
                 <span className="slider round"></span>
             </label>
-            <img src="src\images\Pokédex_logo.png"></img>
+            <img src="https://i.ibb.co/PhckP2C/pokedex-Logo.png"></img>
         </div>
     )
 }

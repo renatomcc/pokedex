@@ -23,13 +23,13 @@ const Pokecard = (props: Pokemon) => {
         if (shinies.includes(data)) {
             shinies.splice(shinies.indexOf(data), 1)
             if (shinyPoke != null) {
-                shinyPoke.style.backgroundImage = "url('src/images/pokeShinyOff.png')"
+                shinyPoke.style.backgroundImage = "url('https://i.ibb.co/CbmPrQ1/poke-Shiny-Off.png')"
                 shinyPoke.ariaKeyShortcuts
             }
         } else {
             shinies.push(data);
             if (shinyPoke != null) {
-                shinyPoke.style.backgroundImage = "url('src/images/pokeShinyOn.png')"
+                shinyPoke.style.backgroundImage = "url('https://i.ibb.co/QF8WLd2/poke-Shiny-On.png)"
             }
         }
         console.log(shinies)
@@ -42,13 +42,13 @@ const Pokecard = (props: Pokemon) => {
             if (poke != null) {
                 favorites.push(data)
                 console.log(`favoritado - ${favorites}`)
-                poke.style.backgroundImage = "url('https://www.nicepng.com/png/full/896-8968612_minecraft-heart-minecraft-health-bar-png.png')"
+                poke.style.backgroundImage = "url('https://i.ibb.co/Qv3hHnN/pokeFav.png')"
             }
         } else {
             if (poke != null) {
                 favorites.splice(favorites.indexOf(data), 1)
                 console.log(`desfavoritado - ${favorites}`)
-                poke.style.backgroundImage = "url('https://art.pixilart.com/d0c8ec54cc21b85.png')"
+                poke.style.backgroundImage = "url('https://i.ibb.co/km8fH2G/poke-No-Fav.png')"
             }
         }
     }
@@ -63,7 +63,7 @@ const Pokecard = (props: Pokemon) => {
                 <div className="pokeNumber">#{props.id}</div>
                 <div className="pokeShiny"
                     style={{
-                        backgroundImage: shinies.includes(props.id) ? "url('src/images/pokeShinyOn.png')" : "url('src/images/pokeShinyOff.png')"
+                        backgroundImage: shinies.includes(props.id) ? "url('https://i.ibb.co/QF8WLd2/poke-Shiny-On.png')" : "url('https://i.ibb.co/CbmPrQ1/poke-Shiny-Off.png')"
                     }}
                     id={`shiny${props.id}`}
                     onClick={() => {
@@ -72,13 +72,13 @@ const Pokecard = (props: Pokemon) => {
                         if (shinies.includes(props.id)) {
                             shinies.splice(shinies.indexOf(props.id), 1)
                             if (shinyPoke != null) {
-                                shinyPoke.style.backgroundImage = "url('src/images/pokeShinyOff.png')"
+                                shinyPoke.style.backgroundImage = "url('https://i.ibb.co/CbmPrQ1/poke-Shiny-Off.png')"
                                 shinyImage?.setAttribute("src", `${props.sprite}`)
                             }
                         } else {
                             shinies.push(props.id);
                             if (shinyPoke != null) {
-                                shinyPoke.style.backgroundImage = "url('src/images/pokeShinyOn.png')"
+                                shinyPoke.style.backgroundImage = "url('https://i.ibb.co/QF8WLd2/poke-Shiny-On.png')"
                                 shinyImage?.setAttribute("src", `${props.shinySprite}`)
                             }
                         }
@@ -86,7 +86,7 @@ const Pokecard = (props: Pokemon) => {
                 />
                 <div className="pokeFav"
                     style={{
-                        backgroundImage: favorites.includes(props.id) ? "url('src/images/pokeFav.png')" : "url('src/images/pokeNoFav.png')"
+                        backgroundImage: favorites.includes(props.id) ? "url('https://i.ibb.co/Qv3hHnN/pokeFav.png')" : "url('https://i.ibb.co/km8fH2G/poke-No-Fav.png')"
                     }}
                     id={`poke${props.id}`}
                     onClick={() => { setFav(props.id) }}

@@ -185,43 +185,43 @@ function setOptionColor(id: string | undefined) {
 function setBG(type: string) {
     switch (type) {
         case 'bug':
-            return 'src/images/bug_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/9/9c/Bug_icon_SwSh.png'
         case 'dark':
-            return 'src/images/dark_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/d/d5/Dark_icon_SwSh.png'
         case 'dragon':
-            return 'src/images/dragon_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/7/70/Dragon_icon_SwSh.png'
         case 'electric':
-            return 'src/images/electric_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/7/7b/Electric_icon_SwSh.png'
         case 'fairy':
-            return 'src/images/fairy_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/c/c6/Fairy_icon_SwSh.png'
         case 'fighting':
-            return 'src/images/fighting_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/3/3b/Fighting_icon_SwSh.png'
         case 'fire':
-            return 'src/images/fire_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/a/ab/Fire_icon_SwSh.png'
         case 'flying':
-            return 'src/images/flying_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/b/b5/Flying_icon_SwSh.png'
         case 'ghost':
-            return 'src/images/ghost_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/0/01/Ghost_icon_SwSh.png'
         case 'grass':
-            return 'src/images/grass_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/a/a8/Grass_icon_SwSh.png'
         case 'ground':
-            return 'src/images/ground_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/2/27/Ground_icon_SwSh.png'
         case 'ice':
-            return 'src/images/ice_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/1/15/Ice_icon_SwSh.png'
         case 'steel':
-            return 'src/images/steel_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/0/09/Steel_icon_SwSh.png'
         case 'normal':
-            return 'src/images/normal_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/9/95/Normal_icon_SwSh.png'
         case 'poison':
-            return 'src/images/poison_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/8/8d/Poison_icon_SwSh.png'
         case 'psychic':
-            return 'src/images/psychic_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/7/73/Psychic_icon_SwSh.png'
         case 'rock':
-            return 'src/images/rock_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/1/11/Rock_icon_SwSh.png'
         case 'water':
-            return 'src/images/water_Icon.png'
+            return 'https://archives.bulbagarden.net/media/upload/8/80/Water_icon_SwSh.png'
     }
-    return 'a'
+    return 'not finded'
 }
 
 export { setColor, setOptionColor, setBG }
