@@ -189,7 +189,7 @@ function setBG(type: string) {
         case 'dark':
             return 'https://archives.bulbagarden.net/media/upload/d/d5/Dark_icon_SwSh.png'
         case 'dragon':
-            return 'https://archives.bulbagarden.net/media/upload/7/70/Dragon_icon_SwSh.png'
+            return 'https://archives.bulbagarden.net/media/upload/2/28/Dragon_icon_LA.png'
         case 'electric':
             return 'https://archives.bulbagarden.net/media/upload/7/7b/Electric_icon_SwSh.png'
         case 'fairy':
