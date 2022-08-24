@@ -16,6 +16,11 @@
     border-radius: 5px;
     padding: 5px;
 }
+.pokeImage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .pokeImage img {
     width: 200px;
@@ -70,4 +75,29 @@
     height: 35px;
     border-radius: 50px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+@media only screen and (max-width: 800px) {
+    .PokeCard{
+        width: 150px;
+        height: auto;
+    }
+
+    .pokeImage img {
+        width: 120px;
+        height: auto;
+    }
+
+    .pokeName {
+        padding-bottom: 10px;
+        font-size: 18px;
+    }
+
+    .pokeTypes img {
+        width: 25px;
+        height: 25px;
+        border-radius: 50px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+    }
+    
 }

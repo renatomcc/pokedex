@@ -1,4 +1,5 @@
 import { useState } from "react"
+import '../styles/header.css'
 
 export const Header = () => {
     const [theme, setTheme] = useState<string>('light')
@@ -17,7 +18,7 @@ export const Header = () => {
                         }
                     } else {
                         setTheme('light');
-                        document.body.style.backgroundImage = "url('https://i.ibb.co/KGWFjpm/light-Background.jpg')"
+                        document.body.style.backgroundImage = "url('https://i.ibb.co/FHL0Jgt/light-Background.png')"
                         document.body.style.transition = 'background 0.5s'
                         if (fontColor) fontColor.style.color = 'black';
                         if (fontColor) {
@@ -28,7 +29,7 @@ export const Header = () => {
                 }} />
                 <span className="slider round"></span>
             </label>
-            <img src="https://i.ibb.co/PhckP2C/pokedex-Logo.png"></img>
+            <img src="https://i.ibb.co/PhckP2C/pokedex-Logo.png" id="pokedexLogo"></img>
         </div>
     )
 }
