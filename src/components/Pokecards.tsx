@@ -17,24 +17,6 @@ var shinies: number[] = []
 
 const Pokecard = (props: Pokemon) => {
 
-
-    const setShiny = (data: number) => {
-        const shinyPoke = document.getElementById(`shiny${props.id}`);
-        if (shinies.includes(data)) {
-            shinies.splice(shinies.indexOf(data), 1)
-            if (shinyPoke != null) {
-                shinyPoke.style.backgroundImage = "url('https://i.ibb.co/CbmPrQ1/poke-Shiny-Off.png')"
-                shinyPoke.ariaKeyShortcuts
-            }
-        } else {
-            shinies.push(data);
-            if (shinyPoke != null) {
-                shinyPoke.style.backgroundImage = "url('https://i.ibb.co/QF8WLd2/poke-Shiny-On.png)"
-            }
-        }
-        console.log(shinies)
-    }
-
     const setFav = (data: number) => {
         const poke = document.getElementById(`poke${data}`);
 
@@ -63,7 +45,7 @@ const Pokecard = (props: Pokemon) => {
                 <div className="pokeNumber">#{props.id}</div>
                 <div className="pokeShiny"
                     style={{
-                        backgroundImage: shinies.includes(props.id) ? "url('https://i.ibb.co/QF8WLd2/poke-Shiny-On.png')" : "url('https://i.ibb.co/CbmPrQ1/poke-Shiny-Off.png')"
+                        backgroundImage: "url('https://i.ibb.co/CbmPrQ1/poke-Shiny-Off.png')"
                     }}
                     id={`shiny${props.id}`}
                     onClick={() => {
