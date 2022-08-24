@@ -10,7 +10,7 @@ body {
     background-repeat: repeat;
     background-attachment: fixed;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    min-width: 500px;
+    min-width: 320px;
 }
 
 .Container {
@@ -42,7 +42,7 @@ option {
 
 .PokeContainer {
     width: 80%;
-    min-width: 450px;
+    min-width: 320px;
     height: auto;
     min-height: 100vh;
 }
