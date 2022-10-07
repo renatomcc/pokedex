@@ -42,8 +42,8 @@ function App() {
       const pokemons = result.map(poke => {
         return {
           id: poke.id,
-          sprite: poke.sprites['front_default'],
-          spriteShiny: poke.sprites['front_shiny'],
+          sprite: poke.sprites.other.home['front_default'],
+          spriteShiny: poke.sprites.other.home['front_shiny'],
           name: poke.name,
           types: poke.types,
           favorite: false,
@@ -57,7 +57,6 @@ function App() {
 
   useEffect(() => {
     fetchData()
-    console.log(filteredPokemons.length)
   }, [])
 
   const sortBy = (option: string) => {
@@ -196,6 +195,7 @@ function App() {
             <div className="Poke-Cards">
               {filteredPokemons.map(poke => (
                 <Pokecard
+                  key={poke.id}
                   id={poke.id}
                   name={poke.name}
                   sprite={shinies.includes(poke.id) ? poke.spriteShiny : poke.sprite}

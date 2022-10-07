@@ -16,6 +16,8 @@ var favorites: number[] = []
 var shinies: number[] = []
 
 const Pokecard = (props: Pokemon) => {
+    const [shiny, setShiny] = useState(false)
+    const [favorite, setFavorite] = useState(false)
 
     const setFav = (data: number) => {
         const poke = document.getElementById(`poke${data}`);
@@ -44,38 +46,31 @@ const Pokecard = (props: Pokemon) => {
             <div className="pokeUpperPart">
                 <div className="pokeNumber">#{props.id}</div>
                 <div className="pokeShiny"
-                    style={{
-                        backgroundImage: "url('https://i.ibb.co/CbmPrQ1/poke-Shiny-Off.png')"
-                    }}
+                    style={shinies.includes(props.id) ? {
+                        backgroundImage: "url('https://i.ibb.co/R9r2vwG/ShinyOn.png')"
+                    } : { backgroundImage: "url('https://i.ibb.co/kJd2223/ShinyOff.png')" }}
                     id={`shiny${props.id}`}
                     onClick={() => {
+                        setShiny(!shiny)
                         const shinyPoke = document.getElementById(`shiny${props.id}`);
-                        const shinyImage = document.getElementById(`img${props.id}`);
-                        if (shinies.includes(props.id)) {
-                            shinies.splice(shinies.indexOf(props.id), 1)
-                            if (shinyPoke != null) {
-                                shinyPoke.style.backgroundImage = "url('https://i.ibb.co/CbmPrQ1/poke-Shiny-Off.png')"
-                                shinyImage?.setAttribute("src", `${props.sprite}`)
-                            }
-                        } else {
-                            shinies.push(props.id);
-                            if (shinyPoke != null) {
-                                shinyPoke.style.backgroundImage = "url('https://i.ibb.co/QF8WLd2/poke-Shiny-On.png')"
-                                shinyImage?.setAttribute("src", `${props.shinySprite}`)
-                            }
+                        if (shiny && shinyPoke) {
+                            shinyPoke.style.backgroundImage = "url('https://i.ibb.co/kJd2223/ShinyOff.png')"
+                        } else if (shinyPoke) {
+                            shinyPoke.style.backgroundImage = "url('https://i.ibb.co/R9r2vwG/ShinyOn.png')"
                         }
-                    }}
+                    }
+                    }
                 />
                 <div className="pokeFav"
                     style={{
-                        backgroundImage: favorites.includes(props.id) ? "url('https://i.ibb.co/Qv3hHnN/pokeFav.png')" : "url('https://i.ibb.co/km8fH2G/poke-No-Fav.png')"
+                        backgroundImage: favorites.includes(props.id) ? "url('https://i.ibb.co/Qv3hHnN/pokeFav.png')" : "url('https://i.ibb.co/h2r2s7y/FavOff.png')"
                     }}
                     id={`poke${props.id}`}
                     onClick={() => { setFav(props.id) }}
                 ></div>
             </div>
             <div className="pokeImage">
-                <img id={`img${props.id}`} src={shinies.includes(props.id) ? props.shinySprite : props.sprite} alt={props.name}
+                <img id={`img${props.id}`} src={shiny ? props.shinySprite : props.sprite} alt={props.name}
                 />
             </div>
             <div className="pokeName">{props.name.charAt(0).toUpperCase() + props.name.slice(1)}</div>

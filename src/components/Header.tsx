@@ -10,7 +10,7 @@ export const Header = () => {
                     const fontColor = document.getElementById('filter_bars');
                     if (theme == 'light') {
                         setTheme('dark');
-                        document.body.style.backgroundImage = "url('https://i.ibb.co/wQ1j4g6/dark-Background.jpg')"
+                        document.body.style.backgroundImage = "url('https://i.ibb.co/5KsYhFT/Dark-Background.png')"
                         document.body.style.transition = 'background 0.5s'
                         if (fontColor) {
                             fontColor.style.color = 'white';
@@ -18,7 +18,7 @@ export const Header = () => {
                         }
                     } else {
                         setTheme('light');
-                        document.body.style.backgroundImage = "url('https://i.ibb.co/FHL0Jgt/light-Background.png')"
+                        document.body.style.backgroundImage = "url('https://i.ibb.co/J3K0rF2/Light-Background.png')"
                         document.body.style.transition = 'background 0.5s'
                         if (fontColor) fontColor.style.color = 'black';
                         if (fontColor) {
